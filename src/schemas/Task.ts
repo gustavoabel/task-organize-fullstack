@@ -1,5 +1,5 @@
-import { model, Schema, Document } from "mongoose";
-import User, { UserInterface } from "./User";
+import { model, Schema, Document } from 'mongoose';
+import { UserInterface } from './User';
 
 export enum StatusEnum {
     OPEN = 'OPEN',
@@ -7,44 +7,42 @@ export enum StatusEnum {
 }
 
 export interface TaskInterface extends Document {
-    name: string, 
-    email: string, 
+    description: string,
+    status: StatusEnum,
     concluded: Date,
     responsible: UserInterface,
-    password: string,
     creation: Date,
 }
 
 const TaskSchema = new Schema({
-    description: {
-        type: String, 
-        required:[true, 'Descrição Obrigatória'], 
+  description: {
+    type: String,
+    required: [true, 'Descrição obrigatória'],
+  },
+  status: {
+    type: String,
+    validate: {
+      validator: (value) => {
+        if (value === StatusEnum.OPEN || value === StatusEnum.FINISHED) return true;
+        return false;
+      },
+      message: (props) => `${props.value} não é um status válido.`,
     },
-    status: {
-        type: String,
-        validate: {
-            validator: (value) => {
-                if(value == StatusEnum.OPEN || value === StatusEnum.FINISHED) return true;
-                return false;
-            },
-            message: (props) => `${props.value} não é um status válido.` 
-        }, 
-        required: [true, 'Status Obrigatório'],
-        uppercase: true
-    },
-    concluded: {
-        type: Date,
-    },
-    responsible: {
-        type: Schema.Types.ObjectId,
-        ref: 'User',
-        required: [true, 'Responsável Obrigatório'],
-    },
-    creation: {
-        type: Date,
-        default: Date.now,
-    },
+    required: [true, 'Status obrigatório'],
+    uppercase: true,
+  },
+  concluded: {
+    type: Date,
+  },
+  responsible: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+    required: [true, 'Responsável obrigatório'],
+  },
+  creation: {
+    type: Date,
+    default: Date.now,
+  },
+});
 
-}); 
-
-export default model<TaskInterface>('Task, TaskSchema');
+export default model<TaskInterface>('Task', TaskSchema);
