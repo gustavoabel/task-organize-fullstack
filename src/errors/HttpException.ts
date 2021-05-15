@@ -1,3 +1,5 @@
+import NoContentException from "./NoContentException";
+
 class HttpException extends Error {
   public status: number;
   public message: string;
