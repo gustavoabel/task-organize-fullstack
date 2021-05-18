@@ -2,7 +2,7 @@ import { Response } from 'express';
 import HttpStatusCode from "./HttpStatusCode";
 
 
-function responseRuntimeError(res:Response, status: HttpStatusCode, message: string){
+function responseRunTimeError(res:Response, status: HttpStatusCode, message: string){
     const error = true;
     const body = {};
 
@@ -12,4 +12,4 @@ function responseRuntimeError(res:Response, status: HttpStatusCode, message: str
     });
 } 
 
-export default responseRuntimeError;
+export default responseRunTimeError;

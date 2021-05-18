@@ -32,9 +32,11 @@ class UserController extends Controller {
   ): Promise<Response> {
     try {
       const users = await User.find();
-      return res.send(responseOk(res, users));
+
+      if(users.length) return responseOk(res, users);
+      next(new NoContentException());
     } catch (error) {
-      return res.send(new ServerErrorException(error));
+      next(new ServerErrorException(error))
       //return res.send(new HttpException(HttpStatusCode.INTERNAL_SERVER_ERROR, 'Erro interno servidor'))
     }
   }
@@ -47,15 +49,18 @@ class UserController extends Controller {
     try {
       const { id } = req.params;
 
-      if (ValidationService.validateId(id))
+      if (ValidationService.validateId(id, next)) return;
         return res
           .status(HttpStatusCode.BAD_REQUEST)
           .send(new IdInvalidException());
 
       const user = await User.findById(id);
+      if (user) return responseOk(res, user);
       return res.send(responseOk(res, user));
+      next(new NoContentException());
     } catch (error) {
-      return res.send(new ServerErrorException(error));
+      next(new ServerErrorException(error));
+      //return res.send(new ServerErrorException(error));
     }
   }
 
@@ -67,9 +72,9 @@ class UserController extends Controller {
     try {
       const user = await User.create(req.body);
 
-      return res.send(responseCreate(res, user));
+      return responseCreate(res, user);
     } catch (error) {
-      return res.send(new ServerErrorException(error));
+      next(new ServerErrorException(error));
     }
   }
 
@@ -80,15 +85,18 @@ class UserController extends Controller {
   ): Promise<Response> {
     try {
       const { id } = req.params;
-      if (ValidationService.validateId(id))
+      if (ValidationService.validateId(id, next)) return;
         return res
           .status(HttpStatusCode.BAD_REQUEST)
           .send(new IdInvalidException());
       const user = await User.findByIdAndUpdate(id, req.body, () => {});
+      if(user) return responseOk(res, user);
 
-      return res.send(responseOk(res, user));
+      next(new NoContentException());
+
+      //return res.send(responseOk(res, user));
     } catch (error) {
-      return res.send(new ServerErrorException(error));
+      next(new ServerErrorException(error));
     }
   }
 
@@ -99,19 +107,18 @@ class UserController extends Controller {
   ): Promise<Response> {
     try {
       const { id } = req.params;
-      if (ValidationService.validateId(id))
+      if (ValidationService.validateId(id, next)) return;
         return res
           .status(HttpStatusCode.BAD_REQUEST)
           .send(new IdInvalidException());
       const user = await User.findById(id);
       if (user) {
         user.deleteOne();
-        return res.send(responseOk(res, user));
+        return responseOk(res, user);
       }
-
-      return res.status(HttpStatusCode.NO_CONTENT).send(new NoContentException);
+      next(new NoContentException());
     } catch (error) {
-      return res.send(new ServerErrorException(error));
+      next(new ServerErrorException(error));
     }
   }
 }
