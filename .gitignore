@@ -3,7 +3,7 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=node
 
 # sei lá que merda é essa carai
-.DS_Store
+*.DS_Store
 
 ### Node ###
 # Logs
