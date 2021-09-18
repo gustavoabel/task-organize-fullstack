@@ -42,11 +42,17 @@ private initControllers(controllers: Controller[]): void {
     this.app.use('/', controller.router);
   });
 }
+<<<<<<< HEAD
 
 private initNotFoundErrorMiddleware() {
   this.app.all('*', notFoundErrorMiddleware);
 }
 
+=======
+private initNotFoundErrorMiddleware() {
+  this.app.all('*', notFoundErrorMiddleware);
+}
+>>>>>>> parent of d7770c7... fix order paste
 private initRunTimeErrorMiddleware() {
   this.app.use(runTimeErrorMiddleware);
 }
