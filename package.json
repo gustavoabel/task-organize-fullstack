@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon src/server.ts",
+    "dev": "nodemon backend/src/server.ts",
     "build": "sucrase ./src -d ./dist --transforms typescript,imports",
     "lint": "eslint .",
     "lint:fix": "eslint --fix --ext .js,.jsx ."
