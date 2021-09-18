@@ -25,7 +25,7 @@ private initMongoose(): void {
 }
 
 private connectDatabase(): void {
-  mongoose.connect('mongodb+srv://gustavoabell:qjyzu8wNPXYMfyjC@cluster0.wcjgz.mongodb.net/fullstack-project?retryWrites=true&w=majority', {
+  mongoose.connect('mongodb+srv://devinvestidor:GF57yCzLCPzKkmKU@cluster0.sxzpy.mongodb.net/curso-javascript?retryWrites=true&w=majority', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false,
@@ -42,9 +42,11 @@ private initControllers(controllers: Controller[]): void {
     this.app.use('/', controller.router);
   });
 }
+
 private initNotFoundErrorMiddleware() {
   this.app.all('*', notFoundErrorMiddleware);
 }
+
 private initRunTimeErrorMiddleware() {
   this.app.use(runTimeErrorMiddleware);
 }
