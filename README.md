@@ -1,4 +1,4 @@
 # task-organize-fullstack
 📚 a project full stack task platform
  
- ### Em Desenvolvimento
+ ### Plataforma de organização de tarefas em desenvolvimento.
