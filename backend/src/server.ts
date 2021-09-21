@@ -9,4 +9,4 @@ const app = new App([
   new DashController(),
 ]);
 
-app.listen(3333);
+app.listen(3333)
